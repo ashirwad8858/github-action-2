@@ -5,7 +5,7 @@ on:
       - "main"
 
 jobs:
-  build test:
+  build-test:
     runs-on: ubuntu-20.04
     steps:
       - name: Clone repository
@@ -19,7 +19,7 @@ jobs:
       - name: test
         run: npm test
   deploy:
-    needs: [build test]
+    needs: [build-test]
     runs-on: ubuntu-20.04
     steps:
       - name: Clone repository
@@ -30,5 +30,7 @@ jobs:
           node-version: 18
       - name: Installing dependency
         run: npm ci
-      - name: test
-        run: npm build
+      - name: build
+        run: npm run build
+      - name: deploy
+        run: echo "deployed"
