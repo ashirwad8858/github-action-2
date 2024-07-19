@@ -5,7 +5,7 @@ on:
       - "main"
 
 jobs:
-  build:
+  build-test:
     runs-on: ubuntu-20.04
     steps:
       - name: Clone repository
@@ -18,3 +18,17 @@ jobs:
         run: npm ci
       - name: test
         run: npm test
+  deploy:
+    needs: [build-test]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+      - name: Installing node js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Installing dependency
+        run: npm ci
+      - name: test
+        run: npm build
